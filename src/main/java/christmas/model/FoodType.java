@@ -1,5 +1,5 @@
 package christmas.model;
 
-public enum MenuType {
+public enum FoodType {
     APPETIZER, MAIN, DESSERT, BEVERAGES
 }

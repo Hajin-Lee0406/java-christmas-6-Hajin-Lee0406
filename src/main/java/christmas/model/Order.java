@@ -1,11 +1,12 @@
 package christmas.model;
 
+import java.awt.*;
 import java.util.List;
 
 public class Order {
-    private final List<Menu> memus;
+    private final List<Food> foods;
 
-    public Order(List<Menu> memus) {
-        this.memus = memus;
+    public Order(List<Food> foods) {
+        this.foods = foods;
     }
 }
