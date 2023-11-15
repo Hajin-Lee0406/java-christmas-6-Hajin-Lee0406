@@ -18,6 +18,7 @@ public class ChristmasController {
 
     private void start(){
         int visitDate = inputView.readDate();
+        inputView.readOrder();
     }
 
 }
