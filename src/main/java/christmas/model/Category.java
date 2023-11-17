@@ -1,5 +1,5 @@
 package christmas.model;
 
-public enum FoodType {
+public enum Category {
     APPETIZER, MAIN, DESSERT, BEVERAGES
 }
