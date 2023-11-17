@@ -1,18 +1,20 @@
 package christmas.controller;
 
 import christmas.model.Food;
+import christmas.model.Menu;
+import christmas.model.Order;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static christmas.model.FoodType.*;
+import static christmas.model.Category.*;
 
 public class ChristmasController {
     private final OutputView outputView;
-    private final InputView inputView;가
-    private final List<Food> menu;
+    private final InputView inputView;
+    private final List<Order> orders = new ArrayList<>();
 
     public ChristmasController() {
         outputView = OutputView.getInstance();
@@ -23,25 +25,33 @@ public class ChristmasController {
         start();
     }
 
-    private void initMenu(){
-        menu.add(new Food("양송이수프", 6000, APPETIZER));
-        menu.add(new Food("타파스", 5500, APPETIZER));
-        menu.add(new Food("시저샐러드", 8000, APPETIZER));
-        menu.add(new Food("티본스테이크", 55000, MAIN));
-        menu.add(new Food("바비큐립", 54000, MAIN));
-        menu.add(new Food("해산물파스타", 35000, MAIN));
-        menu.add(new Food("크리스마스파스타", 25000, MAIN));
-        menu.add(new Food("초코케이크", 15000, DESSERT));
-        menu.add(new Food("아이스크림", 5000, DESSERT));
-        menu.add(new Food("제로콜라", 3000, BEVERAGES));
-        menu.add(new Food("레드와인", 60000, BEVERAGES));
-        menu.add(new Food("샴페인", 25000, BEVERAGES));
+    private void start(){
+        int visitDate = inputView.readDate();
+        getOrder();
     }
 
-    private void start(){
-        initMenu();
-        int visitDate = inputView.readDate();
+    private void getOrder(){
         String inputOrder = inputView.readOrder();
+
+        String[] menus = inputOrder.split(",");
+        for (String menu : menus) {
+            String[] temp = menu.split("-");
+            String menuName = temp[0];
+            int menuCount = Integer.parseInt(temp[1]);
+
+            if(temp.length != 2){
+                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            }
+
+            boolean isExistMenu = orders.stream()
+                    .anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()));
+
+            if(isExistMenu){
+                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            }
+
+            orders.add(new Order(Menu.fromName(menuName), menuCount));
+        }
     }
 
 }

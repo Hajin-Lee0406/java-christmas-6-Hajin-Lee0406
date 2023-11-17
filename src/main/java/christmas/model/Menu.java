@@ -32,8 +32,10 @@ public enum Menu {
         return Arrays.stream(Menu.values())
                 .filter(menu -> menu.name.equals(name))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다."));
+                .orElseThrow(()-> new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."));
     }
+
+
 
     public int getPrice(){
         return price;

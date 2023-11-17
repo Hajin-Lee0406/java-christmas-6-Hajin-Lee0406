@@ -3,11 +3,12 @@ package christmas.model;
 public class Food {
     private String name;
     private int price;
-    private FoodType foodType;
+    private Category category;
 
-    public Food(String name, int price, FoodType foodType) {
+    public Food(String name, int price, Category category) {
         this.name = name;
         this.price = price;
-        this.foodType = foodType;
+        this.category = category;
     }
+
 }

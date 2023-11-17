@@ -2,11 +2,23 @@ package christmas.model;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class Order {
-    private final List<Food> foods;
+    private final Menu menu;
+    private int count;
 
-    public Order(List<Food> foods) {
-        this.foods = foods;
+
+    public Order(Menu menu, int count){
+        this.menu = menu;
+        this.count = count;
+    }
+
+    public Menu getMenu(){
+        return menu;
+    }
+
+    public void updateCount(){
+        count++;
     }
 }
