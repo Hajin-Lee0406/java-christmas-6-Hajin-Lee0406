@@ -26,4 +26,9 @@ public class OutputView {
             System.out.println(order.getMenu().getName() + " " + order.getCount() + "개");
         }
     }
+
+    public void printAccount(int account) {
+        System.out.println("\n<할인 전 총주문 금액>");
+        System.out.println(account + "원");
+    }
 }

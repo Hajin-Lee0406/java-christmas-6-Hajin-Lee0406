@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.model.ChristmasService;
 import christmas.model.Food;
 import christmas.model.Menu;
 import christmas.model.Order;
@@ -12,6 +13,7 @@ import java.util.List;
 import static christmas.model.Category.*;
 
 public class ChristmasController {
+    private static final ChristmasService christmasService =  new ChristmasService();
     private final OutputView outputView;
     private final InputView inputView;
     private final List<Order> orders = new ArrayList<>();
@@ -30,6 +32,7 @@ public class ChristmasController {
         getOrder();
         outputView.printOrderInfo(visitDate);
         outputView.printUserOrders(orders);
+        outputView.printAccount(christmasService.getAccount(orders));
     }
 
     private void getOrder(){
