@@ -31,11 +31,8 @@ public class ChristmasService {
     }
 
     // 증정 이벤트
-    public String isGiftEvent(int account) {
-        if (account < MINIMUM_GIFT_ACCOUNT) {
-            return NO_GIFT;
-        }
-        return GIFT;
+    public boolean isGiftEvent(int account) {
+        return account > MINIMUM_GIFT_ACCOUNT;
     }
 
     // 할인 혜택
@@ -49,9 +46,20 @@ public class ChristmasService {
             WEEK = "주말 할인";
         }
 
-        discounts.add(new Discount("크리스마스 디데이 할인", getDdayDiscount(visitDate)));
-        discounts.add(new Discount(WEEK, getWeekDiscount(visitDate, orders, category)));
-        discounts.add(new Discount("특별할인", getSpecialDiscount(visitDate)));
+        int ddayDiscount = getDdayDiscount(visitDate);
+        if (ddayDiscount != 0){
+            discounts.add(new Discount("크리스마스 디데이 할인", ddayDiscount));
+        }
+
+        int weekDiscount = getWeekDiscount(visitDate, orders, category);
+        if(weekDiscount != 0){
+            discounts.add(new Discount(WEEK, weekDiscount));
+        }
+
+        int specialDiscount = getSpecialDiscount(visitDate);
+        if(specialDiscount != 0){
+            discounts.add(new Discount("특별할인", specialDiscount));
+        }
 
         return discounts;
     }

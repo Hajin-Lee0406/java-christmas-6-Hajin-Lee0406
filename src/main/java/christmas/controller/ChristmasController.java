@@ -1,9 +1,6 @@
 package christmas.controller;
 
-import christmas.model.ChristmasService;
-import christmas.model.Food;
-import christmas.model.Menu;
-import christmas.model.Order;
+import christmas.model.*;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -35,11 +32,10 @@ public class ChristmasController {
         int account = christmasService.getAccount(orders);
         outputView.printAccount(account);
         outputView.printGift(christmasService.isGiftEvent(account));
-        String discount = String.valueOf(christmasService.getDiscount(visitDate, orders));
-        if(discount.equals("0")){
-            discount = "없음";
-        }
-        outputView.printBenefits(discount);
+        ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
+        String discountInfo = "없음";
+
+        outputView.printBenefits(discounts);
     }
 
     private void getOrder(){
@@ -65,5 +61,14 @@ public class ChristmasController {
             orders.add(new Order(Menu.fromName(menuName), menuCount));
         }
     }
+
+    private void printGiftEvent(int account){
+        String giftInfo = "없음";
+        if (christmasService.isGiftEvent(account)) {
+            giftInfo = "샴페인 1개";
+        }
+        outputView.printGift(giftInfo);
+    }
+
 
 }
