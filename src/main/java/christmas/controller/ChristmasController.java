@@ -65,6 +65,11 @@ public class ChristmasController {
 
             orders.add(new Order(Menu.fromName(menuName), menuCount));
         }
+
+        orders.stream()
+                .filter(order -> APPETIZER.equals(order.getMenu().getCategory()))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_ORDER));
     }
 
     private void printGiftEvent(boolean isGiftEvent) {
