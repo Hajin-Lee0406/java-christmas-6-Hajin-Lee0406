@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static christmas.model.Category.*;
+import static christmas.model.ErrorConstants.INVALID_ORDER;
 
 public class ChristmasController {
     private static final ChristmasService christmasService = new ChristmasService();
@@ -52,14 +53,14 @@ public class ChristmasController {
             int menuCount = Integer.parseInt(temp[1]);
 
             if (temp.length != 2) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(INVALID_ORDER);
             }
 
             boolean isExistMenu = orders.stream()
                     .anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()));
 
             if (isExistMenu) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException(INVALID_ORDER);
             }
 
             orders.add(new Order(Menu.fromName(menuName), menuCount));
