@@ -31,11 +31,9 @@ public class ChristmasController {
         outputView.printUserOrders(orders);
         int account = christmasService.getAccount(orders);
         outputView.printAccount(account);
-        outputView.printGift(christmasService.isGiftEvent(account));
-        ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
-        String discountInfo = "없음";
-
-        outputView.printBenefits(discounts);
+        boolean isGiftEvent = christmasService.isGiftEvent(account);
+        printGiftEvent(isGiftEvent);
+        printBenefitInfo(visitDate, isGiftEvent);
     }
 
     private void getOrder(){
@@ -62,13 +60,20 @@ public class ChristmasController {
         }
     }
 
-    private void printGiftEvent(int account){
+    private void printGiftEvent(boolean isGiftEvent){
         String giftInfo = "없음";
-        if (christmasService.isGiftEvent(account)) {
+        if (isGiftEvent) {
             giftInfo = "샴페인 1개";
         }
         outputView.printGift(giftInfo);
     }
 
+    private void printBenefitInfo(int visitDate, boolean isGiftEvent){
+        ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
+        if(isGiftEvent){
+            discounts.add(new Discount("증정 이벤트", 25000));
+        }
+        outputView.printBenefits(discounts);
+    }
 
 }

@@ -1,6 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.model.Discount;
 import christmas.model.Order;
 
 import java.util.List;
@@ -37,8 +38,15 @@ public class OutputView {
         System.out.println(gift);
     }
 
-    public void printBenefits(String benefits) {
+    public void printBenefits(List<Discount> discounts) {
         System.out.println("\n<혜택 내역>");
-        System.out.println(benefits + "개");
+
+        if(discounts.size() == 0){
+            System.out.println("없음");
+        }
+
+        for (Discount discount : discounts) {
+            System.out.println(discount.getName() + ": -" + discount.getAmount() + "원");
+        }
     }
 }
