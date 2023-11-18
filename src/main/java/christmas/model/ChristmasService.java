@@ -42,16 +42,16 @@ public class ChristmasService {
 
         return 1000 + (visitDate - 1) * 100;
     }
-    // 평일 할인
-    public int getWeekdayDiscount(List<Order> orders) {
+
+    public int getDiscount(List<Order> orders, Category menuCategory) {
         int count = 0;
         for (Order order : orders) {
-            if (order.getMenu().getCategory() == DESSERT) {
+            if (order.getMenu().getCategory() == menuCategory) {
                 count++;
             }
         }
 
         return count * 2023;
     }
-    // 총 할인 = 혜택 금액 + 증정 이벤트 금액
+
 }
