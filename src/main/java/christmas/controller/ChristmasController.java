@@ -15,6 +15,9 @@ public class ChristmasController {
     private final OutputView outputView;
     private final InputView inputView;
     private final List<Order> orders = new ArrayList<>();
+    private UserOrder userOrder;
+    int visitDate;
+    boolean isGiftEvent;
 
     public ChristmasController() {
         outputView = OutputView.getInstance();
@@ -26,7 +29,7 @@ public class ChristmasController {
     }
 
     private void start() {
-        int visitDate = inputView.readDate();
+        visitDate = inputView.readDate();
         getOrder();
         outputView.printOrderInfo(visitDate);
         outputView.printUserOrders(orders);
@@ -34,12 +37,12 @@ public class ChristmasController {
         int account = christmasService.getAccount(orders);
         outputView.printAccount(account);
 
-        boolean isGiftEvent = christmasService.isGiftEvent(account);
-        printGiftEvent(isGiftEvent);
+        isGiftEvent = christmasService.isGiftEvent(account);
+        printGiftEvent();
 
-        int totalDiscount = getTotalDiscount(visitDate);
-        printBenefitInfo(visitDate, isGiftEvent);
-        printTotalBenefit(totalDiscount,isGiftEvent);
+        int totalDiscount = getTotalDiscount();
+        printBenefitInfo();
+        printTotalBenefit(totalDiscount);
         printPaymentAccount(account, totalDiscount);
     }
 
@@ -49,30 +52,24 @@ public class ChristmasController {
         String[] menus = inputOrder.split(",");
         for (String menu : menus) {
             String[] temp = menu.split("-");
-            String menuName = temp[0];
-            int menuCount = Integer.parseInt(temp[1]);
 
             if (temp.length != 2) {
                 throw new IllegalArgumentException(INVALID_ORDER);
             }
 
-            boolean isExistMenu = orders.stream()
-                    .anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()));
+            String menuName = temp[0];
+            int menuCount = Integer.parseInt(temp[1]);
 
-            if (isExistMenu) {
+            if (orders.stream().anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()))) {
                 throw new IllegalArgumentException(INVALID_ORDER);
             }
 
             orders.add(new Order(Menu.fromName(menuName), menuCount));
         }
-
-        orders.stream()
-                .filter(order -> APPETIZER.equals(order.getMenu().getCategory()))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_ORDER));
+        userOrder = new UserOrder(orders);
     }
 
-    private void printGiftEvent(boolean isGiftEvent) {
+    private void printGiftEvent() {
         String giftInfo = "없음";
 
         if (isGiftEvent) {
@@ -82,7 +79,7 @@ public class ChristmasController {
         outputView.printGift(giftInfo);
     }
 
-    private void printBenefitInfo(int visitDate, boolean isGiftEvent) {
+    private void printBenefitInfo() {
         ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
 
         if (isGiftEvent) {
@@ -92,7 +89,7 @@ public class ChristmasController {
         outputView.printBenefits(discounts);
     }
 
-    private void printTotalBenefit(int totalDiscount, boolean isGiftEvent) {
+    private void printTotalBenefit(int totalDiscount) {
         int totalBenefit = totalDiscount;
 
         if (isGiftEvent) {
@@ -102,7 +99,7 @@ public class ChristmasController {
         outputView.printTotalBenefit(totalBenefit);
     }
 
-    private int getTotalDiscount(int visitDate){
+    private int getTotalDiscount() {
         int totalDiscount = 0;
         ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
 
@@ -113,7 +110,7 @@ public class ChristmasController {
         return totalDiscount;
     }
 
-    private void printPaymentAccount(int account, int totalDiscount){
+    private void printPaymentAccount(int account, int totalDiscount) {
         int paymentAccount = account - totalDiscount;
         outputView.printPaymentAccount(paymentAccount);
     }
