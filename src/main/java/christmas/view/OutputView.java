@@ -36,4 +36,9 @@ public class OutputView {
         System.out.println("\n<증정 메뉴>");
         System.out.println(gift);
     }
+
+    public void printBenefits(String benefits) {
+        System.out.println("\n<혜택 내역>");
+        System.out.println(benefits + "개");
+    }
 }

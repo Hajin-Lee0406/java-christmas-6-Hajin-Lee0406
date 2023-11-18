@@ -2,9 +2,15 @@ package christmas.model;
 
 import org.mockito.internal.matchers.Or;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static christmas.model.Category.*;
+import static christmas.model.Constants.SPEACIAL_DAYS;
 
 public class ChristmasService {
 
@@ -33,6 +39,32 @@ public class ChristmasService {
     }
 
     // 할인 혜택
+    public ArrayList<Discount> getDiscount(int visitDate, List<Order> orders){
+        ArrayList<Discount> discounts = new ArrayList<>();
+        Category category = DESSERT;
+        String WEEK = "평일 할인";
+
+        if (isWeekend(visitDate)){
+            category = MAIN;
+            WEEK = "주말 할인";
+        }
+
+        discounts.add(new Discount("크리스마스 디데이 할인", getDdayDiscount(visitDate)));
+        discounts.add(new Discount(WEEK, getWeekDiscount(visitDate, orders, category)));
+        discounts.add(new Discount("특별할인", getSpecialDiscount(visitDate)));
+
+        return discounts;
+    }
+
+    private boolean isWeekend(int visitDate){
+        int weekValue = LocalDate.of(2023, 12, visitDate).getDayOfWeek().getValue();
+
+        if (weekValue == 5 || weekValue == 6){
+            return true;
+        }
+
+        return false;
+    }
 
     // 디에이 할인
     public int getDdayDiscount(int visitDate) {
@@ -43,10 +75,11 @@ public class ChristmasService {
         return 1000 + (visitDate - 1) * 100;
     }
 
-    public int getDiscount(List<Order> orders, Category menuCategory) {
+    public int getWeekDiscount(int visitDate, List<Order> orders, Category category) {
         int count = 0;
+
         for (Order order : orders) {
-            if (order.getMenu().getCategory() == menuCategory) {
+            if (order.getMenu().getCategory() == category) {
                 count++;
             }
         }
@@ -54,4 +87,11 @@ public class ChristmasService {
         return count * 2023;
     }
 
+    public int getSpecialDiscount(int visitDate){
+        if (SPEACIAL_DAYS.contains(visitDate)){
+            return 1000;
+        }
+
+        return 0;
+    }
 }

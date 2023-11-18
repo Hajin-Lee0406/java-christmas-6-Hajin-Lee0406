@@ -35,6 +35,11 @@ public class ChristmasController {
         int account = christmasService.getAccount(orders);
         outputView.printAccount(account);
         outputView.printGift(christmasService.isGiftEvent(account));
+        String discount = String.valueOf(christmasService.getDiscount(visitDate, orders));
+        if(discount.equals("0")){
+            discount = "없음";
+        }
+        outputView.printBenefits(discount);
     }
 
     private void getOrder(){
