@@ -10,7 +10,7 @@ import java.util.List;
 import static christmas.model.Category.*;
 
 public class ChristmasController {
-    private static final ChristmasService christmasService =  new ChristmasService();
+    private static final ChristmasService christmasService = new ChristmasService();
     private final OutputView outputView;
     private final InputView inputView;
     private final List<Order> orders = new ArrayList<>();
@@ -24,7 +24,7 @@ public class ChristmasController {
         start();
     }
 
-    private void start(){
+    private void start() {
         int visitDate = inputView.readDate();
         getOrder();
         outputView.printOrderInfo(visitDate);
@@ -34,9 +34,10 @@ public class ChristmasController {
         boolean isGiftEvent = christmasService.isGiftEvent(account);
         printGiftEvent(isGiftEvent);
         printBenefitInfo(visitDate, isGiftEvent);
+        printTotalBenefit(isGiftEvent);
     }
 
-    private void getOrder(){
+    private void getOrder() {
         String inputOrder = inputView.readOrder();
 
         String[] menus = inputOrder.split(",");
@@ -45,14 +46,14 @@ public class ChristmasController {
             String menuName = temp[0];
             int menuCount = Integer.parseInt(temp[1]);
 
-            if(temp.length != 2){
+            if (temp.length != 2) {
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
 
             boolean isExistMenu = orders.stream()
                     .anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()));
 
-            if(isExistMenu){
+            if (isExistMenu) {
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
 
@@ -60,20 +61,37 @@ public class ChristmasController {
         }
     }
 
-    private void printGiftEvent(boolean isGiftEvent){
+    private void printGiftEvent(boolean isGiftEvent) {
         String giftInfo = "없음";
+
         if (isGiftEvent) {
             giftInfo = "샴페인 1개";
         }
+
         outputView.printGift(giftInfo);
     }
 
-    private void printBenefitInfo(int visitDate, boolean isGiftEvent){
+    private void printBenefitInfo(int visitDate, boolean isGiftEvent) {
         ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
-        if(isGiftEvent){
+
+        if (isGiftEvent) {
             discounts.add(new Discount("증정 이벤트", 25000));
         }
+
         outputView.printBenefits(discounts);
+    }
+
+    private void printTotalBenefit(boolean isGiftEvent) {
+        int totalBenefit = 0;
+        for (Order order : orders) {
+            totalBenefit = totalBenefit + order.getCount() * order.getMenu().getPrice();
+        }
+
+        if (isGiftEvent) {
+            totalBenefit = totalBenefit + 25000;
+        }
+
+        outputView.printTotalBenefit(totalBenefit);
     }
 
 }

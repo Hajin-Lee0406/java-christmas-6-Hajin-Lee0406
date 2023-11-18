@@ -41,12 +41,17 @@ public class OutputView {
     public void printBenefits(List<Discount> discounts) {
         System.out.println("\n<혜택 내역>");
 
-        if(discounts.size() == 0){
+        if (discounts.size() == 0) {
             System.out.println("없음");
         }
 
         for (Discount discount : discounts) {
             System.out.println(discount.getName() + ": -" + discount.getAmount() + "원");
         }
+    }
+
+    public void printTotalBenefit(int totalBenefit) {
+        System.out.println("\n<총혜택 금액>");
+        System.out.println(totalBenefit + "원");
     }
 }
