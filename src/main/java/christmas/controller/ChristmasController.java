@@ -28,6 +28,7 @@ public class ChristmasController {
     private void start(){
         int visitDate = inputView.readDate();
         getOrder();
+        outputView.printOrderInfo(visitDate);
     }
 
     private void getOrder(){
