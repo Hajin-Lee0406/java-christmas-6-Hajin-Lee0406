@@ -4,6 +4,8 @@ import org.mockito.internal.matchers.Or;
 
 import java.util.List;
 
+import static christmas.model.Category.*;
+
 public class ChristmasService {
 
     private static final int MINIMUM_GIFT_ACCOUNT = 120000;
@@ -12,7 +14,7 @@ public class ChristmasService {
 
 
     //총 주문 금액 계산
-    public int getAccount(List<Order> orders){
+    public int getAccount(List<Order> orders) {
         int account = 0;
 
         for (Order order : orders) {
@@ -23,10 +25,22 @@ public class ChristmasService {
     }
 
     // 증정 이벤트
-    public String isGiftEvent(int account){
-        if(account < MINIMUM_GIFT_ACCOUNT){
+    public String isGiftEvent(int account) {
+        if (account < MINIMUM_GIFT_ACCOUNT) {
             return NO_GIFT;
         }
         return GIFT;
     }
+
+    // 할인 혜택
+
+    // 디에이 할인
+    public int getDdayDiscount(int visitDate) {
+        if (visitDate > 25) {
+            return 0;
+        }
+
+        return 1000 + (visitDate - 1) * 100;
+    }
+
 }
