@@ -29,12 +29,17 @@ public class ChristmasController {
         getOrder();
         outputView.printOrderInfo(visitDate);
         outputView.printUserOrders(orders);
+
         int account = christmasService.getAccount(orders);
         outputView.printAccount(account);
+
         boolean isGiftEvent = christmasService.isGiftEvent(account);
         printGiftEvent(isGiftEvent);
+
+        int totalDiscount = getTotalDiscount(visitDate);
         printBenefitInfo(visitDate, isGiftEvent);
-        printTotalBenefit(isGiftEvent);
+        printTotalBenefit(totalDiscount,isGiftEvent);
+        printPaymentAccount(account, totalDiscount);
     }
 
     private void getOrder() {
@@ -81,17 +86,30 @@ public class ChristmasController {
         outputView.printBenefits(discounts);
     }
 
-    private void printTotalBenefit(boolean isGiftEvent) {
-        int totalBenefit = 0;
-        for (Order order : orders) {
-            totalBenefit = totalBenefit + order.getCount() * order.getMenu().getPrice();
-        }
+    private void printTotalBenefit(int totalDiscount, boolean isGiftEvent) {
+        int totalBenefit = totalDiscount;
 
         if (isGiftEvent) {
             totalBenefit = totalBenefit + 25000;
         }
 
         outputView.printTotalBenefit(totalBenefit);
+    }
+
+    private int getTotalDiscount(int visitDate){
+        int totalDiscount = 0;
+        ArrayList<Discount> discounts = christmasService.getDiscount(visitDate, orders);
+
+        for (Discount discount : discounts) {
+            totalDiscount = totalDiscount + discount.getAmount();
+        }
+
+        return totalDiscount;
+    }
+
+    private void printPaymentAccount(int account, int totalDiscount){
+        int paymentAccount = account - totalDiscount;
+        outputView.printPaymentAccount(paymentAccount);
     }
 
 }

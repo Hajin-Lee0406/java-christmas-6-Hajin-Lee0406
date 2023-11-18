@@ -54,4 +54,9 @@ public class OutputView {
         System.out.println("\n<총혜택 금액>");
         System.out.println(totalBenefit + "원");
     }
+
+    public void printPaymentAccount(int paymentAccount) {
+        System.out.println("\n<할인 후 예상 결제 금액>");
+        System.out.println(paymentAccount + "원");
+    }
 }
