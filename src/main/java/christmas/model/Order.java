@@ -18,6 +18,10 @@ public class Order {
         return menu;
     }
 
+    public int getCount(){
+        return count;
+    }
+
     public void updateCount(){
         count++;
     }
