@@ -1,9 +1,8 @@
 package christmas.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static christmas.model.Category.APPETIZER;
+import static christmas.model.Category.*;
 import static christmas.model.ErrorConstants.INVALID_ORDER;
 
 public class UserOrder {
@@ -11,23 +10,19 @@ public class UserOrder {
 
     public UserOrder(List<Order> orders) {
         this.orders = orders;
-        getTotalOrderCount();
-        isOnlyBeverages();
+        checkTotalOrderCount();
+        checkOnlyBeverages();
     }
 
-    public int getTotalOrderCount() {
-        return orders.stream()
-                .mapToInt(Order::getCount)
-                .peek(count -> {
-                    if (count > 20) throw new IllegalArgumentException(INVALID_ORDER);
-                })
-                .sum();
+    public void checkTotalOrderCount() {
+        if (orders.stream().mapToInt(Order::getCount).sum() > 20) {
+            throw new IllegalArgumentException(INVALID_ORDER);
+        }
     }
 
-    public void isOnlyBeverages(){
-        orders.stream()
-                .filter(order -> APPETIZER.equals(order.getMenu().getCategory()))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_ORDER));
+    public void checkOnlyBeverages(){
+        if(orders.stream().allMatch(order -> BEVERAGES.equals(order.getMenu().getCategory()))){
+            throw new IllegalArgumentException(INVALID_ORDER);
+        }
     }
 }
