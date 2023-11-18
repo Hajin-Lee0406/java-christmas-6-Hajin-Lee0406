@@ -32,7 +32,9 @@ public class ChristmasController {
         getOrder();
         outputView.printOrderInfo(visitDate);
         outputView.printUserOrders(orders);
-        outputView.printAccount(christmasService.getAccount(orders));
+        int account = christmasService.getAccount(orders);
+        outputView.printAccount(account);
+        outputView.printGift(christmasService.isGiftEvent(account));
     }
 
     private void getOrder(){
