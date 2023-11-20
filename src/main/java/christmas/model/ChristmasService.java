@@ -15,8 +15,6 @@ import static christmas.model.Constants.SPEACIAL_DAYS;
 public class ChristmasService {
 
     private static final int MINIMUM_GIFT_ACCOUNT = 120000;
-    private static final String NO_GIFT = "없음";
-    private static final String GIFT = "샴페인 1개";
 
 
     //총 주문 금액 계산
@@ -51,7 +49,7 @@ public class ChristmasService {
             discounts.add(new Discount("크리스마스 디데이 할인", ddayDiscount));
         }
 
-        int weekDiscount = getWeekDiscount(visitDate, orders, category);
+        int weekDiscount = getWeekDiscount(orders, category);
         if(weekDiscount != 0){
             discounts.add(new Discount(WEEK, weekDiscount));
         }
@@ -83,7 +81,7 @@ public class ChristmasService {
         return 1000 + (visitDate - 1) * 100;
     }
 
-    public int getWeekDiscount(int visitDate, List<Order> orders, Category category) {
+    public int getWeekDiscount(List<Order> orders, Category category) {
         int count = 0;
 
         for (Order order : orders) {
