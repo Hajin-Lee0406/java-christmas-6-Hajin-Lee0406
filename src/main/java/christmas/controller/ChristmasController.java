@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static christmas.model.Category.*;
+import static christmas.model.Constants.GIFT;
+import static christmas.model.Constants.NOTHING;
 import static christmas.model.ErrorConstants.INVALID_ORDER;
 
 public class ChristmasController {
@@ -71,10 +73,10 @@ public class ChristmasController {
     }
 
     private void printGiftEvent() {
-        String giftInfo = "없음";
+        String giftInfo = NOTHING;
 
         if (isGiftEvent) {
-            giftInfo = "샴페인 1개";
+            giftInfo = GIFT;
         }
 
         outputView.printGift(giftInfo);

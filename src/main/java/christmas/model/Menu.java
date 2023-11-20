@@ -3,6 +3,7 @@ package christmas.model;
 import java.util.Arrays;
 
 import static christmas.model.Category.*;
+import static christmas.model.ErrorConstants.INVALID_ORDER;
 
 public enum Menu {
     SOUP("양송이수프", 6000, APPETIZER),
@@ -32,7 +33,7 @@ public enum Menu {
         return Arrays.stream(Menu.values())
                 .filter(menu -> menu.name.equals(name))
                 .findAny()
-                .orElseThrow(()-> new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."));
+                .orElseThrow(()-> new IllegalArgumentException(INVALID_ORDER));
     }
 
 

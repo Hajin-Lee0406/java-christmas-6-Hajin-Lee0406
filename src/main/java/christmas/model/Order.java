@@ -22,7 +22,4 @@ public class Order {
         return count;
     }
 
-    public void updateCount(){
-        count++;
-    }
 }
