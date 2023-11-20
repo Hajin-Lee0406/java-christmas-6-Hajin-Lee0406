@@ -3,7 +3,7 @@ package christmas.model;
 import java.util.Arrays;
 
 import static christmas.model.Category.*;
-import static christmas.model.ErrorConstants.INVALID_ORDER;
+import static christmas.constants.ErrorConstants.INVALID_ORDER;
 
 public enum Menu {
     SOUP("양송이수프", 6000, APPETIZER),

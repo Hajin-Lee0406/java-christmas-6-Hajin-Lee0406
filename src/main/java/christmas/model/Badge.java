@@ -2,7 +2,7 @@ package christmas.model;
 
 import java.util.Arrays;
 
-import static christmas.model.Constants.NOTHING;
+import static christmas.constants.Constants.NOTHING;
 
 public enum Badge {
     SANTA("산타", 20000),

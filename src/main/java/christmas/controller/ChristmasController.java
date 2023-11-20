@@ -7,10 +7,9 @@ import christmas.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static christmas.model.Category.*;
-import static christmas.model.Constants.GIFT;
-import static christmas.model.Constants.NOTHING;
-import static christmas.model.ErrorConstants.INVALID_ORDER;
+import static christmas.constants.Constants.GIFT;
+import static christmas.constants.Constants.NOTHING;
+import static christmas.constants.ErrorConstants.INVALID_ORDER;
 
 public class ChristmasController {
     private static final ChristmasService christmasService = new ChristmasService();

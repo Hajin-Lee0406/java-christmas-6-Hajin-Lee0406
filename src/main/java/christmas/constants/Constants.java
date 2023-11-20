@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.constants;
 
 import java.util.List;
 

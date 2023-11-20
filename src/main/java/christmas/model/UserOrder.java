@@ -3,7 +3,7 @@ package christmas.model;
 import java.util.List;
 
 import static christmas.model.Category.*;
-import static christmas.model.ErrorConstants.INVALID_ORDER;
+import static christmas.constants.ErrorConstants.INVALID_ORDER;
 
 public class UserOrder {
     List<Order> orders;

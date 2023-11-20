@@ -2,7 +2,7 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
-import static christmas.model.ErrorConstants.INVALID_DATE_FORMAT;
+import static christmas.constants.ErrorConstants.*;
 
 public class InputView {
     private static final InputView instance = new InputView();
@@ -15,7 +15,7 @@ public class InputView {
     }
 
     public int readDate() {
-        System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
+        System.out.println(GET_DATE_MESSAGE);
         int date;
 
         try {
@@ -32,7 +32,7 @@ public class InputView {
     }
 
     public String readOrder() {
-        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+        System.out.println(GET_ORDER_MESSAGE);
         return Console.readLine();
     }
 }

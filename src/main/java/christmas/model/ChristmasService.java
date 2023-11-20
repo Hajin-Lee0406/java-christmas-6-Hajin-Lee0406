@@ -1,16 +1,11 @@
 package christmas.model;
 
-import org.mockito.internal.matchers.Or;
-
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static christmas.model.Category.*;
-import static christmas.model.Constants.SPEACIAL_DAYS;
+import static christmas.constants.Constants.SPEACIAL_DAYS;
 
 public class ChristmasService {
 
