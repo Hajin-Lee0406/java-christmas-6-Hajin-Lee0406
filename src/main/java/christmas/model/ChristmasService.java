@@ -102,4 +102,8 @@ public class ChristmasService {
 
         return 0;
     }
+
+    public String getBadge(int totalPaymentAccount){
+        return Badge.getBadgeName(totalPaymentAccount);
+    }
 }

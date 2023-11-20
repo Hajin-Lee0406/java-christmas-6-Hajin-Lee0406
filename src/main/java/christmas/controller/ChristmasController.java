@@ -43,7 +43,8 @@ public class ChristmasController {
         int totalDiscount = getTotalDiscount();
         printBenefitInfo();
         printTotalBenefit(totalDiscount);
-        printPaymentAccount(account, totalDiscount);
+        int totalPaymentAccount = printPaymentAccount(account, totalDiscount);
+        printBadge(totalPaymentAccount);
     }
 
     private void getOrder() {
@@ -110,9 +111,16 @@ public class ChristmasController {
         return totalDiscount;
     }
 
-    private void printPaymentAccount(int account, int totalDiscount) {
+    private int printPaymentAccount(int account, int totalDiscount) {
         int paymentAccount = account - totalDiscount;
         outputView.printPaymentAccount(paymentAccount);
+
+        return paymentAccount;
+    }
+
+    private void printBadge(int totalPaymentAccount){
+        String badgeName = christmasService.getBadge(totalPaymentAccount);
+        outputView.printBadgeName(badgeName);
     }
 
 }

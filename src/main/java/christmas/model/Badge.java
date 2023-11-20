@@ -1,10 +1,11 @@
 package christmas.model;
 
+import java.util.Arrays;
+
 public enum Badge {
-    NONE("없음", 0),
-    STAR("별", 5000),
+    SANTA("산타", 20000),
     TREE("트리", 10000),
-    SANTA("산타", 20000);
+    STAR("별", 5000);
 
     private String name;
     private int price;
@@ -14,4 +15,15 @@ public enum Badge {
         this.price = price;
     }
 
+    public static String getBadgeName(int totalPaymentAccount){
+        return Arrays.stream(Badge.values())
+                .filter(badge -> badge.price < totalPaymentAccount)
+                .findAny()
+                .map(Badge::getName)
+                .orElse("없음");
+    }
+
+    public String getName() {
+        return name;
+    }
 }
