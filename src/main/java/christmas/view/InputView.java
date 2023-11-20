@@ -2,6 +2,8 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import static christmas.constants.Constants.GET_DATE_MESSAGE;
+import static christmas.constants.Constants.GET_ORDER_MESSAGE;
 import static christmas.constants.ErrorConstants.*;
 
 public class InputView {
