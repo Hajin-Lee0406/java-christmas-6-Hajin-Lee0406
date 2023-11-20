@@ -15,7 +15,11 @@ public enum Badge {
         this.price = price;
     }
 
-    public static String getBadgeName(int totalPaymentAccount){
+    public static String getBadgeName(int totalPaymentAccount) {
+        if (totalPaymentAccount < 10000) {
+            return "없음";
+        }
+
         return Arrays.stream(Badge.values())
                 .filter(badge -> badge.price < totalPaymentAccount)
                 .findAny()
