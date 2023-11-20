@@ -9,7 +9,7 @@ public enum Badge {
     TREE("트리", 10000),
     STAR("별", 5000);
 
-    private String name;
+    private final String name;
     private int price;
 
     Badge(String name, int price) {

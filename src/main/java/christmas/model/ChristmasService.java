@@ -11,8 +11,6 @@ public class ChristmasService {
 
     private static final int MINIMUM_GIFT_ACCOUNT = 120000;
 
-
-    //총 주문 금액 계산
     public int getAccount(List<Order> orders) {
         int account = 0;
 
@@ -23,12 +21,11 @@ public class ChristmasService {
         return account;
     }
 
-    // 증정 이벤트
+
     public boolean isGiftEvent(int account) {
         return account > MINIMUM_GIFT_ACCOUNT;
     }
 
-    // 할인 혜택
     public ArrayList<Discount> getDiscount(int visitDate, List<Order> orders){
         ArrayList<Discount> discounts = new ArrayList<>();
         Category category = DESSERT;
@@ -60,14 +57,10 @@ public class ChristmasService {
     private boolean isWeekend(int visitDate){
         int weekValue = LocalDate.of(2023, 12, visitDate).getDayOfWeek().getValue();
 
-        if (weekValue == 5 || weekValue == 6){
-            return true;
-        }
-
-        return false;
+        return weekValue == 5 || weekValue == 6;
     }
 
-    // 디에이 할인
+
     public int getDdayDiscount(int visitDate) {
         if (visitDate > 25) {
             return 0;
