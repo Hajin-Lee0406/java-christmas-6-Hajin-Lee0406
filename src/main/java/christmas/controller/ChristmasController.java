@@ -60,14 +60,18 @@ public class ChristmasController {
                 throw new IllegalArgumentException(INVALID_ORDER);
             }
 
-            String menuName = temp[0];
-            int menuCount = Integer.parseInt(temp[1]);
+            try {
+                String menuName = temp[0];
+                int menuCount = Integer.parseInt(temp[1]);
 
-            if (orders.stream().anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()))) {
+                if (orders.stream().anyMatch(order -> Menu.fromName(menuName).equals(order.getMenu()))) {
+                    throw new IllegalArgumentException(INVALID_ORDER);
+                }
+
+                orders.add(new Order(Menu.fromName(menuName), menuCount));
+            } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(INVALID_ORDER);
             }
-
-            orders.add(new Order(Menu.fromName(menuName), menuCount));
         }
         userOrder = new UserOrder(orders);
     }

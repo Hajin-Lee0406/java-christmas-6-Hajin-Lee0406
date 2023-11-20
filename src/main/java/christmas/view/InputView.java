@@ -2,6 +2,8 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import static christmas.model.ErrorConstants.INVALID_DATE_FORMAT;
+
 public class InputView {
     private static final InputView instance = new InputView();
 
@@ -19,11 +21,11 @@ public class InputView {
         try {
             date = Integer.parseInt(Console.readLine());
         } catch (NumberFormatException e){
-            throw new IllegalArgumentException("[ERROR] 1 ~ 31 사이의 날짜를 입력해주세요");
+            throw new IllegalArgumentException(INVALID_DATE_FORMAT);
         }
 
         if (date < 1 || date > 31) {
-            throw new IllegalArgumentException("[ERROR] 1 ~ 31 사이의 날짜를 입력해주세요");
+            throw new IllegalArgumentException(INVALID_DATE_FORMAT);
         }
 
         return date;
